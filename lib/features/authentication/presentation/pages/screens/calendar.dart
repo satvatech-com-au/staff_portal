@@ -1,109 +1,187 @@
 
 
+
+import '../../widgets/components/calenda_event.dart';
 import '../../widgets/exports/exports.dart';
+import 'package:table_calendar/table_calendar.dart';
 
-class Calander extends StatefulWidget {
-  Calander({super.key});
-
+class Calendar extends StatefulWidget {
   @override
-  State<Calander> createState() => _CalanderState();
+  _CalendarState createState() => _CalendarState();
 }
 
-class _CalanderState extends State<Calander> {
-bool showEvents = true;
-final List<NeatCleanCalendarEvent> _eventList = [
-  NeatCleanCalendarEvent(
-    "AllDay",
-      startTime: DateTime(DateTime.now().year,
-       DateTime.now().month,
-         DateTime.now().day + 2, 6, 0),
-      endTime: DateTime(DateTime.now().year,
-       DateTime.now().month,
-          DateTime.now().day + 2, 17, 0),
-      color: Colors.pink,
-      wide: false,
-      isAllDay: false),
-      NeatCleanCalendarEvent(
-      'Event A',
-      startTime: DateTime(
-          DateTime.now().year, DateTime.now().month, DateTime.now().day, 10, 0),
-      endTime: DateTime(
-          DateTime.now().year, DateTime.now().month, DateTime.now().day, 12, 0),
-      description: 'A special event',
-      color: Colors.red[700],
-    ),
-    NeatCleanCalendarEvent(
-      'Event A',
-      startTime: DateTime(
-          DateTime.now().year, DateTime.now().month, DateTime.now().day, 10, 0),
-      endTime: DateTime(
-          DateTime.now().year, DateTime.now().month, DateTime.now().day, 12, 0),
-      description: 'A special event',
-      color: Colors.yellow[700],
-    ),
- 
-];
+class _CalendarState extends State<Calendar> {
+  late Map<DateTime, List<Event>> selectedEvents;
+  CalendarFormat format = CalendarFormat.month;
+  DateTime selectedDay = DateTime.now();
+  DateTime focusedDay = DateTime.now();
 
- 
+  TextEditingController _eventController = TextEditingController();
 
   @override
   void initState() {
+    selectedEvents = {};
     super.initState();
+  }
 
-    _handleNewDate(DateTime(
-        DateTime.now().year, DateTime.now().month, DateTime.now().day));
+  List<Event> _getEventsfromDay(DateTime date) {
+    return selectedEvents[date] ?? [];
+  }
+
+  @override
+  void dispose() {
+    _eventController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child:
-       Container(
-        height: 500.h,
-        width: MediaQuery.of(context).size.width,
-         child: Calendar(
-            startOnMonday: true,
-            weekDays: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
-            eventsList: _eventList,
-            isExpandable: true,
-            eventDoneColor: Colors.green,
-            selectedColor: Colors.pink,
-            selectedTodayColor: Colors.blue,
-            todayColor: Colors.blue,
-            eventColor: null,
-            locale: 'en_US',
-            todayButtonText: 'English',
-            isExpanded: true,
-            eventTileHeight: 70,
-            expandableDateFormat: 'EEEE, dd. MMMM yyyy',
-            onEventSelected: (value) {
-              print('Event selected ${value.summary}');
+      appBar: AppBar(
+        title: const Text(" Calendar"),
+        centerTitle: true,
+      ),
+      body: Column(
+        children: [
+          TableCalendar(
+            focusedDay: selectedDay,
+            firstDay: DateTime(1990),
+            lastDay: DateTime(2050),
+            calendarFormat: format,
+            onFormatChanged: (CalendarFormat _format) {
+              setState(() {
+                format = _format;
+              });
             },
-            onEventLongPressed: (value) {
-              print('Event long pressed ${value.summary}');
+            startingDayOfWeek: StartingDayOfWeek.sunday,
+            daysOfWeekVisible: true,
+
+            //Day Changed
+            onDaySelected: (DateTime selectDay, DateTime focusDay) {
+              setState(() {
+                selectedDay = selectDay;
+                focusedDay = focusDay;
+              });
+              print(focusedDay);
             },
-            onMonthChanged: (value) {
-              print('Month changed $value');
+            selectedDayPredicate: (DateTime date) {
+              return isSameDay(selectedDay, date);
             },
-            onRangeSelected: (value) {
-              print('Range selected ${value.from} - ${value.to}');
-            },
-            datePickerType: DatePickerType.date,
-            dayOfWeekStyle: TextStyle(
-                color: Colors.blue, fontWeight: FontWeight.w800, fontSize: 15.sp),
-            showEvents: showEvents,
+
+            eventLoader: _getEventsfromDay,
+
+            //To style the Calendar
+            calendarStyle: CalendarStyle(
+              isTodayHighlighted: true,
+              selectedDecoration: BoxDecoration(
+                color: Colors.blue,
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(5.0),
+              ),
+              selectedTextStyle: const TextStyle(color: Colors.white),
+              todayDecoration: BoxDecoration(
+                color: Colors.purpleAccent,
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(5.0),
+              ),
+              defaultDecoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(5.0),
+              ),
+              weekendDecoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(5.0),
+              ),
+            ),
+            headerStyle: HeaderStyle(
+              formatButtonVisible: true,
+              titleCentered: true,
+              formatButtonShowsNext: false,
+              formatButtonDecoration: BoxDecoration(
+                color: Colors.blue,
+                borderRadius: BorderRadius.circular(5.0),
+              ),
+              formatButtonTextStyle: const TextStyle(
+                color: Colors.white,
+              ),
+            ),
           ),
-       ),
-      ));
+          ..._getEventsfromDay(selectedDay).map(
+            (Event event) => Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(),
+                  borderRadius: BorderRadius.circular(12.0)
+                ),
+                child: ListTile(
+                  
+                  title: Text(
+                    event.title,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text("Add Event"),
+            content: TextFormField(
+              controller: _eventController,
+            ),
+            actions: [
+              TextButton(
+                child: const Text("Cancel"),
+                onPressed: () => Navigator.pop(context),
+              ),
+              TextButton(
+                child: const Text("Ok"),
+                onPressed: () {
+                  if (_eventController.text.isEmpty) {
 
+                  } else {
+                    if (selectedEvents[selectedDay] != null) {
+                      selectedEvents[selectedDay]!.add(
+                        Event(title: _eventController.text),
+                      );
+                    } else {
+                      selectedEvents[selectedDay] = [
+                        Event(title: _eventController.text)
+                      ];
+                    }
+
+                  }
+                  Navigator.pop(context);
+                  _eventController.clear();
+                  setState((){});
+                  return;
+                },
+              ),
+            ],
+          ),
+        ),
+        label: const Text("Add Event"),
+        icon: const Icon(Icons.add),
+      ),
+    );
   }
-
-  void _handleNewDate(date) {
-    print('Date selected: $date');
-  }
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

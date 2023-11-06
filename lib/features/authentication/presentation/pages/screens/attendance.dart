@@ -11,6 +11,7 @@ class Attendance extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.blue,
+        elevation: 0,
         title: Text(
           "Attendance",
           style: BoldHeaderstextStyle(color: Colors.white),
@@ -26,7 +27,7 @@ class Attendance extends StatelessWidget {
               color: Colors.blue,
             ),
             Positioned(
-              top: 30,
+              top: 50,
               child: Container(
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
@@ -52,7 +53,7 @@ class Attendance extends StatelessWidget {
                           ),
                           itemCount: 3,
                           itemBuilder: (context, index) => Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(2.0),
                             child: attendance(),
                           ),
                         ),
@@ -255,7 +256,7 @@ class Attendance extends StatelessWidget {
               children: [
                 Container(
                   height: 20.h,
-                  width: 90.w,
+                  width: 60.w,
                   decoration: BoxDecoration(
                       color: Colors.black,
                       borderRadius: BorderRadius.circular(15.0)),
@@ -270,7 +271,7 @@ class Attendance extends StatelessWidget {
                 ),
                 Container(
                   height: 20.w,
-                  width: 80.h,
+                  width: 60.h,
                   decoration: BoxDecoration(
                       color: Colors.red,
                       borderRadius: BorderRadius.circular(15.0)),

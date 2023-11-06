@@ -13,7 +13,7 @@ class _TabControlWidgetState extends State<TabControlWidget> {
   @override
   Widget build(BuildContext context) {
     return  DefaultTabController(
-          length: 6,
+          length: 4,
           child: Column(
             children: <Widget>[
               ButtonsTabBar(
@@ -34,10 +34,8 @@ class _TabControlWidgetState extends State<TabControlWidget> {
                   Tab(icon: Icon(Icons.reset_tv),
                   text: "Rejected",),
                   Tab(icon: Icon(Icons.open_with_rounded),
-                  text: "Withdraw",),
-                  Tab(icon: Icon(Icons.summarize_sharp),
-                  text: "Suspension",),
-                  Tab(icon: Icon(Icons.cast_sharp),
+                 
+                  
                   text: "Checking",),
                 ],
               ),

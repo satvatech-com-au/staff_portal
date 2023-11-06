@@ -1,4 +1,5 @@
 import 'package:hr_application/features/authentication/presentation/pages/screens/buttom_navigation.dart';
+import 'package:hr_application/features/authentication/presentation/pages/screens/staff_forms/sign_in_page.dart';
 import 'package:hr_application/features/authentication/presentation/widgets/components/common_widgets.dart';
 import 'package:hr_application/features/authentication/presentation/widgets/components/fonts_styles.dart';
 
@@ -13,149 +14,149 @@ class AdminLoginScreen extends StatefulWidget {
 }
 
 class _LogInState extends State<AdminLoginScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool isValidEmail(String email) {
+   
+    final emailRegex = RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$');
+    return emailRegex.hasMatch(email);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue.shade100,
-      body: const _loginform(),
-    );
-  }
-}
-
-class _loginform extends StatelessWidget {
-  const _loginform({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        height: 600,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(400),
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(
-                height: 100,
+        backgroundColor: Colors.blue.shade100,
+        body: Center(
+          child: Container(
+            height: 600,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(400),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    children: [
-                      Text(
-                        "Hey There!",
-                        style: MediumHeaderStyle(),
-                      ),
-                      Text(
-                        "Contiune to login",
-                        style: getRegularStyleSmall(),
-                      ),
-                    ],
-                  ),
-                  Container(
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0)),
-                    child: const Text(
-                      "🤪",
-                      style: TextStyle(fontSize: 40),
-                    ),
-                  )
-                ],
-              ),
-              const _username(),
-              const _accessToken(),
-              const SizedBox(
-                height: 10,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              tap(
-                  text: "tap",
-                  onPress: () {
-                    LoginController(context:context );
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => const BottomNav()));
-                  })
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _accessToken extends StatelessWidget {
-  const _accessToken({
-    super.key,
-  });
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap:(){
-        LoginController(context :context).handleLogin("token");
-      } ,
-      child: Container(
-        height: 60,
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 7),
-        margin: const EdgeInsets.only(bottom: 10),
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: TextFormField(
-        
-          decoration: const InputDecoration(
-            prefixIconColor: Colors.blue,
-            prefixIcon: Icon(Icons.brightness_auto),
-            border: InputBorder.none,
-            hintText: 'Token',
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _username extends StatelessWidget {
-  const _username({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap:(){
-         LoginController(context :context).handleLogin("email");
-      },
-      child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 20),
-        height: 60,
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 7),
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: TextFormField(
-            decoration:  InputDecoration(
-              prefixIconColor: Colors.blue,
-              prefixIcon: Icon(Icons.alternate_email_outlined),
-              hintText: 'Email',
-              border: InputBorder.none,
             ),
-            validator: (value) => null),
-      ),
-    );
+            child: Form(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const SizedBox(
+                      height: 100,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          children: [
+                            Text(
+                              "Hey There!",
+                              style: MediumHeaderStyle(),
+                            ),
+                            Text(
+                              "Contiune to login",
+                              style: getRegularStyleSmall(),
+                            ),
+                          ],
+                        ),
+                        Container(
+                          height: 50,
+                          width: 50,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0)),
+                          child: const Text(
+                            "🤪",
+                            style: TextStyle(fontSize: 40),
+                          ),
+                        )
+                      ],
+                    ),
+                    TextFormField(
+                      decoration: InputDecoration(
+                        labelText: 'Name',
+                        prefixIcon: Icon(Icons.email),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blue, width: 1.5),
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.green, width: 2.0),
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.red, width: 2.0),
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                      ),
+                      validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Email is required';
+                      } else if (!isValidEmail(value)) {
+                        return 'Enter a valid email address';
+                      }
+                      return null;
+                    },
+                    ),
+                    SizedBox(height: 20,),
+                    TextFormField(
+                      obscureText:
+                          true, 
+                      decoration: InputDecoration(
+                          labelText: 'Password',
+                          prefixIcon: Icon(Icons.password),
+                           enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blue, width: 1.5),
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.green, width: 2.0),
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.red, width: 2.0),
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                          ),
+                       validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Password is required';
+                      }
+                      if (value.length < 8) {
+                        return 'Password must be at least 8 characters long';
+                      }
+                      if (!RegExp(
+                              r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$%^&*])')
+                          .hasMatch(value)) {
+                        return 'Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character';
+                      }
+                      return null; // Return null to indicate the input is valid
+                    },
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    
+                   ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>SignInPage()));
+                        if (_formKey.currentState!.validate()) {
+                          //Navigator.push(context, MaterialPageRoute(builder: (context)=>SignInPage()));
+                        }else{
+                          return null;
+                        }
+                      },
+                      child: Text('Sign In'),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        )
+        );
   }
 }
+
+
+
+
+

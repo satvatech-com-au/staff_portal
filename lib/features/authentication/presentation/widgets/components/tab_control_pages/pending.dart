@@ -24,19 +24,19 @@ class Pending extends StatelessWidget {
             boxShadow: const [
               BoxShadow(
                   color: Colors.grey,
-                  blurRadius: 10,
+                  blurRadius: 5,
                   spreadRadius: 1,
                   offset: Offset(4, 4)),
             ]),
             child:  Row(
               children:[
-                Padding(
+                const Padding(
                   padding:  EdgeInsets.all(8.0),
                   child: Column(
                     children: [
                       CircleAvatar(
-                        child: Text("1"),
-                        radius: 10,
+                        child: Text(""),
+                        radius: 8,
                       ),
                       VerticalDivider(
                         indent: 10,
@@ -46,8 +46,8 @@ class Pending extends StatelessWidget {
                         color: Colors.black,
                       ),
                       CircleAvatar(
-                        child: Text("2"),
-                        radius: 10,
+                        child: Text(""),
+                        radius: 8,
                       )
                     ],
                   ),
@@ -58,19 +58,19 @@ class Pending extends StatelessWidget {
                child: Column(
                 children: [
                   Text("22,jan 2022",style: getRegularSmall(),),
-                  SizedBox(height: 11,),
+                  const SizedBox(height: 11,),
                   Text("22,jan 2022",style: getRegularSmall(),)
                 ],
                ),
              ),
-             SizedBox(width: 150,),
+             const SizedBox(width: 100,),
              Padding(
                padding: const EdgeInsets.all(8.0),
                child: Column(
                 children: [
                   Container(
                     height: 30,
-                    width: 74,
+                    width: 70,
                     decoration: BoxDecoration(
                       color: Colors.red,
                       borderRadius: BorderRadius.circular(15.0)
@@ -88,4 +88,44 @@ class Pending extends StatelessWidget {
       ),
     );
   }
+}
+
+void _showBottomSheet(BuildContext context) {
+  showModalBottomSheet(
+    context: context,
+    builder: (BuildContext context) {
+      return Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Text(
+              'Enter Text',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            TextFormField(
+             // controller: _textEditingController,
+              decoration: InputDecoration(
+                labelText: 'Type here',
+              ),
+            ),
+            SizedBox(height: 16.0),
+            ElevatedButton(
+              onPressed: () {
+                // Handle the data entered in the text field
+                //String enteredText = _textEditingController.text;
+              //  print('Entered Text: $enteredText');
+                // Close the bottom sheet
+                Navigator.of(context).pop();
+              },
+              child: Text('Submit'),
+            ),
+          ],
+        ),
+      );
+    },
+  );
 }

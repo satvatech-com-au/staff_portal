@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hr_application/features/authentication/presentation/pages/screens/attendance.dart';
 import 'package:hr_application/features/authentication/presentation/pages/screens/profilePage.dart';
+import 'package:intl/intl.dart';
 
 import '../../widgets/components/common_widgets.dart';
 import '../../widgets/components/drawer_head.dart';
@@ -24,37 +26,39 @@ class _HomeState extends State<Home> {
     Colors.purple,
   ];
 
-  List<Map<String, dynamic>> items = [
+  List<Map<String, dynamic>> itemsList = [
     {
-      "id": 1,
-      "text": "Pending",
-      "title": "Check ",
+      'icon': Icons.history,
+      'text': 'Attendance',
+      'title': 'History',
+      'screen': Attendance()
     },
     {
-      "id": 2,
-      "text": "Avaliable",
-      "title": "leaves",
+      'icon': Icons.leak_remove,
+      'text': 'Leaves',
+      'title': '',
+      'screen': Attendance()
     },
     {
-      "id": 3,
-      "text": "Month",
-      "title": "Attend",
+      'icon': Icons.hourglass_bottom_outlined,
+      'text': 'Total',
+      'title': '',
+      'screen': Attendance()
     },
     {
-      "id": 4,
-      "text": "Pension",
-      "title": "Schemes",
-    },
-    {
-      "id": 5,
-      "text": "Nothing",
-      "title": "Really",
+      'icon': Icons.payments,
+      'text': 'YTD',
+      'title': 'Payroll',
+      'screen': Attendance()
     },
   ];
+  bool isIconVisible = true;
+  DateTime now = DateTime.now();
+  String formattedDate = DateFormat('EEE, MMM d, y').format(DateTime.now());
   late DateTime currentDateTime;
   late Timer timer;
   @override
- void initState() {
+  void initState() {
     super.initState();
 
     // Initialize the current date and time.
@@ -75,24 +79,32 @@ class _HomeState extends State<Home> {
     super.dispose();
   }
 
+  Color iconColor = Colors.red; // Initial color
+  bool isTapped = false;
+
+  void _handleTap() {
+    setState(() {
+      // Toggle the tapped state and change the icon color
+      isTapped = !isTapped;
+      iconColor = isTapped ? Colors.blue : Colors.red;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-     
     return Scaffold(
       drawer: Drawer(
         child: SingleChildScrollView(
           child: Container(
             child: const Column(
-              children: [
-                DrawerHead(),
-                MyDrawerList()
-                ],
+              children: [DrawerHead(), MyDrawerList()],
             ),
           ),
         ),
       ),
       appBar: AppBar(
         backgroundColor: Colors.blue,
+        elevation: 0,
       ),
       body: Column(
         children: [
@@ -125,8 +137,11 @@ class _HomeState extends State<Home> {
                                   style: getMedium(color: Colors.white))
                             ]),
                         GestureDetector(
-                          onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>ProfilePage()));
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ProfilePage()));
                           },
                           child: const CircleAvatar(
                             radius: 40,
@@ -153,7 +168,7 @@ class _HomeState extends State<Home> {
                       '${currentDateTime.hour}:${currentDateTime.minute}:${currentDateTime.second}',
                       style: BoldHeaderstextStyle(),
                     ),
-                     Text('${currentDateTime.year}-${currentDateTime.month}-${currentDateTime.day}')
+                    Text(formattedDate)
                   ],
                 ),
                 const VerticalDivider(
@@ -161,12 +176,18 @@ class _HomeState extends State<Home> {
                   color: Colors.grey,
                   width: 30,
                 ),
-                const Column(
+                Column(
                   children: [
-                    Icon(
-                      Icons.toggle_off,
-                      size: 45,
-                      color: Colors.blue,
+                    InkWell(
+                      onTap: () =>
+                          setState(() => isIconVisible = !isIconVisible),
+                      child: Icon(
+                        isIconVisible
+                            ? Icons.toggle_off
+                            : Icons.toggle_on_outlined,
+                        size: 45,
+                        color: Colors.blue,
+                      ),
                     ),
                     Text("Remote Work")
                   ],
@@ -177,85 +198,86 @@ class _HomeState extends State<Home> {
           SizedBox(
             height: 30.h,
           ),
-          Container(
-              width: 150,
-              height: 150,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100),
-                  color: Colors.red,
-                  boxShadow: [
-                    BoxShadow(
-                        color: Colors.grey.shade200,
-                        blurRadius: 10,
-                        spreadRadius: 1,
-                        offset: const Offset(4, 4)),
-                  ]),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(
-                    Icons.access_alarm,
-                    size: 80,
-                    color: Colors.white,
-                  ),
-                  Text(
-                    "Check Out",
-                    style: getRegularSmaller(color: Colors.white),
-                  )
-                ],
-              )),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text("Time can be a source of anxiety,",style: getRegularSmall(),),
-              Text("Each moment in time is unique, and once it passes,",style: getRegularSmall(),),
-            ],
+          InkWell(
+            onTap: _handleTap,
+            child: Container(
+                width: 150,
+                height: 150,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100),
+                    color: iconColor,
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.grey.shade200,
+                          blurRadius: 10,
+                          spreadRadius: 1,
+                          offset: const Offset(4, 4)),
+                    ]),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Icons.access_alarm,
+                      size: 80,
+                      color: Colors.white,
+                    ),
+                    Text(
+                      isTapped ? 'Check In' : 'Check Out',
+                      style: getRegularSmaller(color: Colors.white),
+                    )
+                  ],
+                )),
           ),
-          const Divider(
-            indent: 30,
-            endIndent: 30,
+          SizedBox(
+            height: 30,
           ),
           SizedBox(
             height: 100,
             child: ListView.separated(
                 shrinkWrap: true,
-                itemCount: 5,
+                itemCount: 4,
                 scrollDirection: Axis.horizontal,
                 separatorBuilder: (context, index) => SizedBox(
                       width: 10.w,
                     ),
                 itemBuilder: (context, index) {
                   final borderColor = borderColors[index];
-                  items[index];
+                  final item = itemsList[index];
+                  final iconData = item['icon'] as IconData;
+                  final text = item['text'] as String;
+                  final title = item['title'] as String;
                   return Container(
                     height: 80.h,
-                    width: 70.w,
+                    width: 100.w,
                     child: Column(
                       children: [
-                        Container(
-                          width: 50, // Set the width and height as needed
-                          height: 50,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: borderColor, width: 2.0),
-                            shape: BoxShape.circle,
-                            color: Colors.white,
-                          ),
-                          child: Center(
-                            child: Text(
-                              items[index]['id'].toString(),
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 24.0,
-                              ),
+                        GestureDetector(
+                          onTap: () {
+                            final screenToNavigate = item['screen'] as Widget;
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => screenToNavigate),
+                            );
+                          },
+                          child:Container(
+                            width: 50,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              border:
+                                  Border.all(color: borderColor, width: 2.0),
+                              shape: BoxShape.circle,
+                              color: Colors.white,
                             ),
+                            child: Center(child: Icon(iconData)),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 5),
-                          child: Text(items[index]["text"]),
+                          child: Text(text),
                         ),
-                        Text(items[index]["title"])
+                        Text(title)
                       ],
                     ),
                     decoration: BoxDecoration(
@@ -264,15 +286,15 @@ class _HomeState extends State<Home> {
                         boxShadow: const [
                           BoxShadow(
                               color: Colors.grey,
-                              blurRadius: 10,
+                              blurRadius: 5,
                               spreadRadius: 1,
                               offset: Offset(4, 4)),
                         ]),
                   );
                 }),
           ),
-          const SizedBox(
-            height: 5,
+           SizedBox(
+            height: 40.h,
           ),
           Padding(
               padding: const EdgeInsets.all(8.0),
@@ -291,81 +313,135 @@ class MyDrawerList extends StatelessWidget {
     return Column(
       children: [
         ListTile(
-          leading: const Icon(Icons.home,color: Colors.blue,),
-          title: Text("Home",style: getMedium(),),
-          onTap: (){
+          leading: const Icon(
+            Icons.home,
+            color: Colors.blue,
+          ),
+          title: Text(
+            "Home",
+            style: getMedium(),
+          ),
+          onTap: () {
             Navigator.pop(context);
           },
-          trailing: const Icon(Icons.arrow_forward_ios,color: Colors.blue,),
+          trailing: const Icon(
+            Icons.arrow_forward_ios,
+            color: Colors.blue,
+          ),
         ),
         const Divider(),
         ListTile(
-          leading: const Icon(Icons.calendar_month,color: Colors.blue,),
-          title: Text("My Calender",style: getMedium()),
-          onTap: (){
+          leading: const Icon(
+            Icons.calendar_month,
+            color: Colors.blue,
+          ),
+          title: Text("My Calender", style: getMedium()),
+          onTap: () {
             Navigator.pop(context);
           },
-          trailing: const Icon(Icons.arrow_forward_ios,color: Colors.blue,),
+          trailing: const Icon(
+            Icons.arrow_forward_ios,
+            color: Colors.blue,
+          ),
         ),
         const Divider(),
         ListTile(
-          leading: const Icon(Icons.announcement,color: Colors.blue,),
-          title: Text("Announcement",style: getMedium()),
-          onTap: (){
+          leading: const Icon(
+            Icons.announcement,
+            color: Colors.blue,
+          ),
+          title: Text("Announcement", style: getMedium()),
+          onTap: () {
             Navigator.pop(context);
           },
-          trailing: const Icon(Icons.arrow_forward_ios,color: Colors.blue,),
+          trailing: const Icon(
+            Icons.arrow_forward_ios,
+            color: Colors.blue,
+          ),
         ),
         const Divider(),
         ListTile(
-          leading: const Icon(Icons.people,color: Colors.blue,),
-          title: Text("Team Management",style: getMedium()),
-          onTap: (){
+          leading: const Icon(
+            Icons.people,
+            color: Colors.blue,
+          ),
+          title: Text("Team Management", style: getMedium()),
+          onTap: () {
             Navigator.pop(context);
           },
-          trailing: const Icon(Icons.arrow_forward_ios,color: Colors.blue,),
+          trailing: const Icon(
+            Icons.arrow_forward_ios,
+            color: Colors.blue,
+          ),
         ),
         const Divider(),
         ListTile(
-          leading: const Icon(Icons.calendar_today,color: Colors.blue,),
-          title: Text("Members Managements",style: getMedium()),
-          onTap: (){
+          leading: const Icon(
+            Icons.calendar_today,
+            color: Colors.blue,
+          ),
+          title: Text("Members Managements", style: getMedium()),
+          onTap: () {
             Navigator.pop(context);
           },
-          trailing: const Icon(Icons.arrow_forward_ios,color: Colors.blue,),
+          trailing: const Icon(
+            Icons.arrow_forward_ios,
+            color: Colors.blue,
+          ),
         ),
         const Divider(),
         ListTile(
-          leading: const Icon(Icons.apps_outlined,color: Colors.blue,),
-          title: Text("Manage Application",style: getMedium()),
-          onTap: (){
+          leading: const Icon(
+            Icons.apps_outlined,
+            color: Colors.blue,
+          ),
+          title: Text("Manage Application", style: getMedium()),
+          onTap: () {
             Navigator.pop(context);
           },
-          trailing: const Icon(Icons.arrow_forward_ios,color: Colors.blue,),
+          trailing: const Icon(
+            Icons.arrow_forward_ios,
+            color: Colors.blue,
+          ),
         ),
         const Divider(),
         ListTile(
-          leading: const Icon(Icons.report,color: Colors.blue,),
-          title: Text("Reporting",style: getMedium()),
-          onTap: (){
+          leading: const Icon(
+            Icons.report,
+            color: Colors.blue,
+          ),
+          title: Text("Reporting", style: getMedium()),
+          onTap: () {
             Navigator.pop(context);
           },
-          trailing: const Icon(Icons.arrow_forward_ios,color: Colors.blue,),
+          trailing: const Icon(
+            Icons.arrow_forward_ios,
+            color: Colors.blue,
+          ),
         ),
         const Divider(),
         ListTile(
-          leading: const Icon(Icons.question_answer,color: Colors.blue,),
-          title: Text("About",style: getMedium()),
-          onTap: (){
+          leading: const Icon(
+            Icons.question_answer,
+            color: Colors.blue,
+          ),
+          title: Text("About", style: getMedium()),
+          onTap: () {
             Navigator.pop(context);
           },
-          trailing: const Icon(Icons.arrow_forward_ios,color: Colors.blue,),
+          trailing: const Icon(
+            Icons.arrow_forward_ios,
+            color: Colors.blue,
+          ),
         ),
         const Divider(),
         ListTile(
-          leading: const Icon(Icons.logout,color: Colors.blue,),
-          title: Text("Logout",style: getMedium()),
-          onTap: (){},
+          leading: const Icon(
+            Icons.logout,
+            color: Colors.blue,
+          ),
+          title: Text("Logout", style: getMedium()),
+          onTap: () {},
         ),
       ],
     );

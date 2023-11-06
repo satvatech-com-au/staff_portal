@@ -13,7 +13,7 @@ class _BottomNavState extends State<BottomNav> {
   int currentindex  = 0;
   List pages=[
    Home(),
-   Calander(),
+    Calendar(),
    Alert(),
    More()
    

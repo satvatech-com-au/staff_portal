@@ -1,15 +1,19 @@
-import 'package:hr_application/features/authentication/presentation/pages/onboarding/onboarding_screen2.dart';
-import 'package:hr_application/features/authentication/presentation/widgets/exports/exports.dart';
+import 'package:device_preview/device_preview.dart';
+import 'package:flutter/foundation.dart';
 
 import 'features/authentication/presentation/bloc_provider.dart';
-
+import 'features/authentication/presentation/pages/screens/profilePage.dart';
+import 'features/authentication/presentation/pages/screens/staff_forms/employee_details.dart';
+import 'features/authentication/presentation/widgets/exports/exports.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(DevicePreview(
+    enabled: !kReleaseMode,
+    builder: (context) => MyApp(),
+  ) // Wrap your app
 
-    
+      );
 }
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -18,40 +22,44 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers:AppBlocProviders.allBlocProviders,
+      providers: AppBlocProviders.allBlocProviders,
       child: ScreenUtilInit(
-        designSize: const Size(460, 690),
-        minTextAdapt: true,
-        splitScreenMode: true,
-         builder: (_ , child){
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
-          theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-            useMaterial3: true,
-            appBarTheme: AppBarTheme(
-              iconTheme: IconThemeData(color: Colors.white)
-            )
-          ), 
-          home:OnboardingScreen2()
-          //CheckInOut()
-          //AboutApp()
-          // CreateApplicaton()
-          //Attendance()
-          //SplashScreen()
-          //More()
-          //Alert()
-          //Calander()
-         //Home()
-         //ProfilePage()
-          //BottomNav()
-          //AdminLoginScreen(),
-        );
-       }
-      ),
+          designSize: const Size(460, 690),
+          minTextAdapt: true,
+          splitScreenMode: true,
+          builder: (_, child) {
+            return MaterialApp(
+                debugShowCheckedModeBanner: false,
+                locale: DevicePreview.locale(context),
+                builder: DevicePreview.appBuilder,
+                title: 'Flutter Demo',
+                theme: ThemeData.light(),
+                darkTheme: ThemeData.dark(),
+                // theme: ThemeData(
+                //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+                //   useMaterial3: true,
+                //   appBarTheme: AppBarTheme(
+                //     iconTheme: IconThemeData(color: Colors.white)
+                //   )
+                // ),
+                home:
+                    // OnboardingScreen2()
+                    //CheckInOut()
+                    //AboutApp()
+                    // CreateApplicaton()
+                    //Attendance()
+                    //SplashScreen()
+                    //More()
+                    //Alert()
+                    // Calendar()
+                    //Home()
+                    ProfilePage()
+                //BottomNav()
+                //AdminLoginScreen(),
+                //Alert()
+                //PersonalInfo()
+                );
+          }),
     );
-  
   }
 }
-

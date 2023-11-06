@@ -18,7 +18,7 @@ class ProfilePage extends StatelessWidget {
               color: Colors.blue,
               child: Padding(
                 padding: const EdgeInsets.only(
-                  top: 20,
+                  top: 30,
                   left: 150
                 ),
                 child: Text("Profile",style: BoldHeaderstextStyle(color: Colors.white),),
@@ -50,12 +50,12 @@ class ProfilePage extends StatelessWidget {
                         height: 50,
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
-                          color: Colors.grey[200],
+                          border: Border.all(),
                           borderRadius: BorderRadius.circular(15.0),
                         ),
                         child: const TextField(
                           decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.email,color: Colors.blue,),
+                            prefixIcon: Icon(Icons.email,),
                             hintText: "Email",
                             border: InputBorder.none
                           ),
@@ -66,84 +66,49 @@ class ProfilePage extends StatelessWidget {
                         height: 50,
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
-                          color: Colors.grey[200],
+                          border: Border.all(),
                           borderRadius: BorderRadius.circular(15.0),
                         ),
                         child: const TextField(
                           decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.mobile_friendly,color: Colors.blue,),
+                            prefixIcon: Icon(Icons.mobile_friendly,),
                             hintText: "Mobile",
                             border: InputBorder.none
                           ),
                         ),
                       ),
                       const SizedBox(height: 10,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                           Container(
-                        height: 50.h,
-                        width: 200.w,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                        child: const TextField(
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.card_membership,color: Colors.blue,),
-                            hintText: "CIINC",
-                            border: InputBorder.none
-                          ),
-                        ),
-                      ),
+                    
                        Container(
-                        height: 50,
-                        width: 150,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                        child: const TextField(
-                          decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.format_align_center,color: Colors.blue,),
-                            hintText: "DGB",
-                            border: InputBorder.none
-                          ),
-                        ),
-                      )
-                        ],
-                      ),
-                      const SizedBox(height: 10,),
-                       Container(
-                        height: 50,
+                        height: 45.h,
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
-                          color: Colors.grey[200],
+                          border: Border.all(),
                           borderRadius: BorderRadius.circular(15.0),
                         ),
                         child: const TextField(
                           decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.terminal,color: Colors.blue,),
+                            prefixIcon: Icon(Icons.terminal,),
                             hintText: "Team Placements",
                             border: InputBorder.none,
-                            suffixIcon: Icon(Icons.arrow_drop_down_sharp,color: Colors.blue,)
+                            suffixIcon: Icon(Icons.arrow_drop_down_sharp,)
                           ),
                         ),
                       ),
                       const SizedBox(height: 10,),
                        Container(
-                        height: 50,
+                        height: 45.h,
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
-                          color: Colors.grey[200],
+                          border: Border.all(),
                           borderRadius: BorderRadius.circular(15.0),
                         ),
                         child: const TextField(
                           decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.merge_type,color: Colors.blue,),
+                            prefixIcon: Icon(Icons.merge_type),
                             hintText: "Type of Job",
                             border: InputBorder.none,
-                            suffixIcon: Icon(Icons.arrow_drop_down_sharp,color: Colors.blue,)
+                            suffixIcon: Icon(Icons.arrow_drop_down_sharp,)
                           ),
                         ),
                       ),
@@ -152,18 +117,18 @@ class ProfilePage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                            Container(
-                        height: 50.h,
+                        height: 45.h,
                         width: 200.w,
                         decoration: BoxDecoration(
-                          color: Colors.grey[200],
+                          border: Border.all(),
                           borderRadius: BorderRadius.circular(15.0),
                         ),
                         child: const TextField(
                           decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.calendar_month,color: Colors.blue,),
+                            prefixIcon: Icon(Icons.calendar_month,),
                             hintText: "Start",
                             border: InputBorder.none,
-                            suffixIcon: Icon(Icons.arrow_drop_down,color: Colors.blue,)
+                            suffixIcon: Icon(Icons.arrow_drop_down,)
                           ),
                         ),
                       ),
@@ -171,7 +136,7 @@ class ProfilePage extends StatelessWidget {
                         height: 50,
                         width: 150,
                         decoration: BoxDecoration(
-                          color: Colors.grey[200],
+                          border: Border.all(),
                           borderRadius: BorderRadius.circular(15.0),
                         ),
                         child: const TextField(
