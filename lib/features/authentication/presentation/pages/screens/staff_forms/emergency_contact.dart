@@ -13,12 +13,18 @@ TextController textController = TextController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[100],
+      appBar: AppBar(
+        backgroundColor: Colors.grey[100],
+        elevation: 0,
+        
+        title: Text('Emergency Contact',style: MediumHeaderStyle(),),
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-               Text('Emergency Contact',style: MediumHeaderStyle(),),
                 SizedBox(
                   height: 15.h,
                 ),

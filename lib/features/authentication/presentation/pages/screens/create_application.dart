@@ -12,7 +12,11 @@ class CreateApplicaton extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
-        title:Text('Create Application',style: BoldHeaderstextStyle(color:Colors.white),),
+        elevation: 0,
+        title: Text(
+          'Create Application',
+          style: BoldHeaderstextStyle(color: Colors.white),
+        ),
         centerTitle: true,
       ),
       body: Stack(
@@ -21,8 +25,8 @@ class CreateApplicaton extends StatelessWidget {
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             color: Colors.blue,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 150),
+            child: const Padding(
+              padding: EdgeInsets.only(left: 150),
             ),
           ),
           Positioned(
@@ -65,89 +69,134 @@ class CreateApplicaton extends StatelessWidget {
                                   offset: const Offset(4, 4)),
                             ]),
                         child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: EdgeInsets.all(8.0),
                           child: Row(
                             children: [
-                              Icon(
-                                Icons.calendar_month,
-                                color: Colors.blue,
+                              IntrinsicHeight(
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Container(
+                                      height: 50,
+                                      width: 150,
+                                      child: textFields(
+                                        hintText: 'Date ',
+                                        //controller: textController.edufrmDateController,
+                                        keyboardType:
+                                            TextInputType.emailAddress,
+                                        obscureText: false,
+                                      ),
+                                    ),
+                                    SizedBox(width: 5,),
+                                    const VerticalDivider(
+                                      thickness: 2,
+                                      color: Colors.grey,
+                                      width: 10,
+                                    ),
+                                    SizedBox(width: 5,),
+                                    Container(
+                                        height: 50,
+                                        width: 150,
+                                        child: textFields(
+                                          hintText: 'Date To:',
+                                          //controller: textController.eduToDateController,
+                                          keyboardType:
+                                              TextInputType.emailAddress,
+                                          obscureText: false,
+                                        ))
+                                  ],
+                                ),
                               ),
-                              Text("From"),
-                              SizedBox(width: 50,),
-                              Icon(Icons.arrow_drop_down),
-                              SizedBox(width: 30,),
-                              const VerticalDivider(
-                                thickness: 1,
-                                color: Colors.grey,
-                                width: 30,
-                                indent: 15,
-                                endIndent: 15,
-                              ),
-                              Text("To"),
-                              SizedBox(width: 50,),
-                              Icon(Icons.arrow_drop_down),
                             ],
                           ),
                         ),
                       ),
                     ),
-                    SizedBox(height: 10,),
-                    Text('Select you leave type',style: MediumHeaderStyle(),),
-                    SizedBox(height: 10,),
-                     Row(
-                       children: [
-                         Container(
-                            height: 30.h,
-                            width: 100.w,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(15.0),
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: Colors.grey.shade200,
-                                      blurRadius: 10,
-                                      spreadRadius: 1,
-                                      offset: const Offset(4, 4)),
-                                ]),
-                                child: Center(child: Text("Full day",style: getRegularSmall(),)),
-                         ),
-                         SizedBox(width: 10,),
-                          Container(
-                            height: 30.h,
-                            width: 100.w,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(15.0),
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: Colors.grey.shade200,
-                                      blurRadius: 10,
-                                      spreadRadius: 1,
-                                      offset: const Offset(4, 4)),
-                                ]),
-                                child: Center(child: Text("Half day",style: getRegularSmall(),)),
-                         ),
-                          SizedBox(width: 10,),
-                          Container(
-                            height: 30.h,
-                            width: 100.w,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(15.0),
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: Colors.grey.shade200,
-                                      blurRadius: 10,
-                                      spreadRadius: 1,
-                                      offset: const Offset(4, 4)),
-                                ]),
-                                child: Center(child: Text("Second day",style: getRegularSmall(),)),
-                         ),
-                       ],
-                     ),
-                     SizedBox(height: 10,),
-                     Center(
-                       child: Container(
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Text(
+                      'Select you leave type',
+                      style: MediumHeaderStyle(),
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          height: 30.h,
+                          width: 100.w,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(15.0),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.grey.shade200,
+                                    blurRadius: 10,
+                                    spreadRadius: 1,
+                                    offset: const Offset(4, 4)),
+                              ]),
+                          child: Center(
+                              child: Text(
+                            "Full day",
+                            style: getRegularSmall(),
+                          )),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Container(
+                          height: 30.h,
+                          width: 100.w,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(15.0),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.grey.shade200,
+                                    blurRadius: 10,
+                                    spreadRadius: 1,
+                                    offset: const Offset(4, 4)),
+                              ]),
+                          child: Center(
+                              child: Text(
+                            "Half day",
+                            style: getRegularSmall(),
+                          )),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Container(
+                          height: 30.h,
+                          width: 100.w,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(15.0),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.grey.shade200,
+                                    blurRadius: 10,
+                                    spreadRadius: 1,
+                                    offset: const Offset(4, 4)),
+                              ]),
+                          child: Center(
+                              child: Text(
+                            "Second day",
+                            style: getRegularSmall(),
+                          )),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Stack(
+                      children: [
+                        Center(
+                          child: Container(
                               height: 210.h,
                               width: 400.w,
                               decoration: BoxDecoration(
@@ -160,14 +209,44 @@ class CreateApplicaton extends StatelessWidget {
                                         spreadRadius: 1,
                                         offset: const Offset(4, 4)),
                                   ]),
-                       ),
-                     ),
-                     SizedBox(height: 10,),
-                      tap(
-                      text: "Upload Attachments",
-                    
+                              child: const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: TextField(
+                                  expands: true,
+                                  maxLines: null,
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    filled: true,
+                                  ),
+                                ),
+                              )),
+                        ),
+                        Positioned(
+                            top: 151.h,
+                            left: 240.h,
+                            child: CircleAvatar(
+                              radius: 25,
+                              child: Icon(Icons.note),
+                            ))
+                      ],
                     ),
-                     SizedBox(height: 5,),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: Material(
+                          color: Colors.grey[200],
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          child: TextButton(
+                              onPressed: () {},
+                              child: Text('Upload Attachment'))),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
                     tap(
                       onPress: () {},
                       text: "Submit Application",
@@ -222,7 +301,7 @@ class CreateApplicaton extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
                 Container(

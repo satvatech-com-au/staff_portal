@@ -13,16 +13,19 @@ class ContactInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[100],
+      appBar: AppBar(
+        backgroundColor: Colors.grey[100],
+        elevation: 0,
+        
+        title: Text('Contact Information',style: MediumHeaderStyle(),),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                Text(
-                  'Contact Information',
-                  style: MediumHeaderStyle(),
-                ),
                 SizedBox(
                   height: 20.h,
                 ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hr_application/features/authentication/presentation/widgets/components/fonts_styles.dart';
 
 class Alert extends StatefulWidget {
@@ -43,9 +44,31 @@ class _AlertState extends State<Alert> {
               height: 3.h,
             ),
             itemCount: 20,
-            itemBuilder: (context, index) => Padding(
+            itemBuilder: (context, index) => Slidable(
+              endActionPane: ActionPane(
+                                motion: const ScrollMotion(),
+                                children: [
+                                  const SlidableAction(
+                                    onPressed: null,
+                                    backgroundColor: Color(0xFFFE4A49),
+                                    foregroundColor: Colors.white,
+                                    icon: Icons.delete,
+                                    label: 'Delete',
+                                  ),
+                                  SlidableAction(
+                                    onPressed: null,
+                                    backgroundColor: Colors.blue.shade400,
+                                    foregroundColor: Colors.white,
+                                    icon: Icons.remove_red_eye,
+                                    label: 'View',
+                                  ),
+                                ],
+                              ),
+              child: Padding(
                 padding: const EdgeInsets.all(5.0),
-                child: GestureDetector(child: card())),
+                child: GestureDetector(child: card()),
+              ),
+            ),
           ),
         ],
       ),

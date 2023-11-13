@@ -1,15 +1,16 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
-
 import 'features/authentication/presentation/bloc_provider.dart';
-import 'features/authentication/presentation/pages/screens/profilePage.dart';
 import 'features/authentication/presentation/pages/screens/staff_forms/employee_details.dart';
+import 'features/authentication/presentation/pages/screens/staff_forms/skills_competencies.dart';
 import 'features/authentication/presentation/widgets/exports/exports.dart';
 
 void main() {
-  runApp(DevicePreview(
+  runApp(
+    DevicePreview(
     enabled: !kReleaseMode,
-    builder: (context) => MyApp(),
+    builder: (context) => 
+    MyApp(),
   ) // Wrap your app
 
       );
@@ -33,7 +34,9 @@ class MyApp extends StatelessWidget {
                 locale: DevicePreview.locale(context),
                 builder: DevicePreview.appBuilder,
                 title: 'Flutter Demo',
-                theme: ThemeData.light(),
+                theme: ThemeData(
+                  appBarTheme: AppBarTheme(iconTheme: IconThemeData(color: Colors.black))
+                ),
                 darkTheme: ThemeData.dark(),
                 // theme: ThemeData(
                 //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -43,21 +46,23 @@ class MyApp extends StatelessWidget {
                 //   )
                 // ),
                 home:
-                    // OnboardingScreen2()
+                   // OnboardingScreen2()
                     //CheckInOut()
                     //AboutApp()
-                    // CreateApplicaton()
+                   // CreateApplicaton()
                     //Attendance()
                     //SplashScreen()
                     //More()
                     //Alert()
                     // Calendar()
-                    //Home()
-                    ProfilePage()
-                //BottomNav()
+                   // Home()
+                    //ProfilePage()
+               // BottomNav()
                 //AdminLoginScreen(),
                 //Alert()
-                //PersonalInfo()
+                //SkillsAndCompetencies()
+                PersonalInfo()
+                //WorkHistory()
                 );
           }),
     );

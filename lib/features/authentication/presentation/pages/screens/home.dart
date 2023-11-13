@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hr_application/features/authentication/presentation/pages/screens/attendance.dart';
+import 'package:hr_application/features/authentication/presentation/pages/screens/create_application.dart';
 import 'package:hr_application/features/authentication/presentation/pages/screens/profilePage.dart';
 import 'package:intl/intl.dart';
 
@@ -79,14 +80,14 @@ class _HomeState extends State<Home> {
     super.dispose();
   }
 
-  Color iconColor = Colors.red; // Initial color
-  bool isTapped = false;
+  Color iconColor = Colors.green; // Initial color
+  bool isTapped = true;
 
   void _handleTap() {
     setState(() {
       // Toggle the tapped state and change the icon color
       isTapped = !isTapped;
-      iconColor = isTapped ? Colors.blue : Colors.red;
+      iconColor = isTapped ? Colors.green : Colors.red ;
     });
   }
 
@@ -298,7 +299,9 @@ class _HomeState extends State<Home> {
           ),
           Padding(
               padding: const EdgeInsets.all(8.0),
-              child: tap(text: "Apply for leaves", onPress: () {})),
+              child: tap(text: "Apply for leaves", onPress: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>CreateApplicaton()));
+              })),
         ],
       ),
     );
